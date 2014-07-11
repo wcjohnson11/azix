@@ -8,6 +8,8 @@ var Q = require('q');
 
 module.exports.error = error = function(err) {
   console.log(err);
+  res.send(500);
+  // send error code?
 };
 
 module.exports.clone = clone = function(dest, source) {
@@ -54,4 +56,13 @@ module.exports.createRepoUID = function(obj) {
 
 module.exports.endpoint = function(file) {
   return path.join(config.host + ':', file);
+};
+
+module.exports.validateObj = function(obj, properties) {
+  for (var i = 0; i < properties.length; i++) {
+    if (!obj.hasOwnProperty(properties[i])) {
+      return false;
+    }
+  }
+  return true;
 };
