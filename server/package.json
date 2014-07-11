@@ -10,7 +10,10 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "~4.5.1",
-    "body-parser": "~1.4.3"
+    "body-parser": "~1.4.3",
+    "gift": "~0.4.2",
+    "q": "~1.0.1",
+    "ncp": "~0.6.0"
   },
   "devDependencies": {
     "chai": "~1.9.1",
