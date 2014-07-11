@@ -32,22 +32,23 @@ module.exports.cloneBare = function(dest) {
       }
     })
     .then(function() {
-    ncp(config.bareRepo, dest, function(err) {
-      if (err) {
-        deferred.reject(new Error(err));
-      } else {
-        deferred.resolve(dest);
-      }
-    });
-  })
-  .catch(error);
+      ncp(config.bareRepo, dest, function(err) {
+        if (err) {
+          deferred.reject(new Error(err));
+        } else {
+          deferred.resolve(dest);
+        }
+      });
+    })
+    .catch(error);
+
   return deferred.promise;
 };
 
 module.exports.createRepoUID = function(obj) {
   /*
     Creates a unique identifier to use as a repo name.
-   */
+  */
   return path.join(obj.username, obj.projectname + '.git');
 };
 
