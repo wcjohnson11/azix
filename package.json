@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Azix/azix",
   "dependencies": {
     "commander": "^2.2.0",
+    "gift": "^0.4.2",
     "inquirer": "^0.5.1",
     "prompt": "^0.2.13",
     "q": "^1.0.1",
