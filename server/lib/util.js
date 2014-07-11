@@ -42,7 +42,7 @@ module.exports.cloneBare = function(dest) {
   })
   .catch(error);
   return deferred.promise;
-}
+};
 
 module.exports.createRepoUID = function(obj) {
   /*
