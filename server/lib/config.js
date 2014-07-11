@@ -1,3 +1,5 @@
 module.exports = {
-  host: 'localhost'
+  host: 'localhost',
+  bareRepo: 'assets/bareRepo.git',
+  repositories: '/tmp/repositories'
 };

@@ -8,6 +8,7 @@ var initHandler = function(req, res) {
     1. Receives data with client info
     2. Creates uid with that data
     3. Clones (forks?) base repo
+    4. Adds Repo data to DB
     4. Sends back data to client { uid, repoEndpoint }
 
     arguments:
@@ -17,13 +18,11 @@ var initHandler = function(req, res) {
 
   var uid = util.createRepoUID(req.body);
   util.cloneBare(repo(uid))
-    .then(util.createEndpoint)
+    .then(util.endpoint)
     .then(function(data) {
       res.send({ endpoint: data });
     })
-    .catch(function(e) {
-      console.log(e);
-    });
+    .catch(util.error);
 
 
 };
