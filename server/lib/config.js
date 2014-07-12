@@ -3,5 +3,5 @@ module.exports = {
   dbhost: process.env.DBHOST || 'localhost',
   dbname: 'azix',
   bareRepo: 'assets/bareRepo.git',
-  repositories: '/tmp/repositories'
+  repositories: 'repos'
 };

@@ -1,4 +1,5 @@
 var apiRouter = require('./routes/api.js');
+var gitRouter = require('./routes/git.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
@@ -9,6 +10,7 @@ app.use(logger());
 app.use(bodyParser.json());
 
 app.use('/api', apiRouter);
+app.use('/repos', gitRouter);
 
 app.listen(process.env.PORT || 8000);
 

@@ -51,7 +51,7 @@ module.exports.createRepoUID = function(obj) {
   /*
     Creates a unique identifier to use as a repo name.
   */
-  return path.join(obj.username, obj.projectname + '.git');
+  return path.join(obj.username, obj.projectname);
 };
 
 module.exports.endpoint = function(file) {
