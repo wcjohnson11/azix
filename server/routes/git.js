@@ -5,8 +5,8 @@ var router = express.Router();
 var repos = pushover(config.repositories);
 
 repos.on('push', function(push) {
-  console.log('push ' + push.repo + '/'
-              + push.commit +  ' (' + push.branch + ')');
+  var msg = 'push ' + push.repo + '/' + push.commit +  ' (' + push.branch + ')';
+  console.log(msg);
   push.accept();
 });
 
