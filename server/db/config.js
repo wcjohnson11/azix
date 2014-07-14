@@ -11,4 +11,15 @@ var repoSchema = new Schema({
 
 var Repo = mongoose.model('Repo', repoSchema);
 
+var runLogSchema = new Schema({
+  user: { type: String, required: true },
+  project: { type: String, required: true },
+  instanceId: { type: String, required: true },
+  started: { type: Date, default: Date.now },
+  startCommit: { type: String, required: true },
+  completed: { type: Date },
+  completeCommit: { type: String },
+  ami: { type: String, required: true }
+});
+
 module.exports.Repo = Repo;
