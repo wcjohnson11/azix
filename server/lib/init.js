@@ -26,6 +26,8 @@ var initHandler = function(req, res) {
     })
     .then(initRepo)
     .then(function(data) {
+      console.log(data);
+      if (data.length) { data = data[0]; }
       res.send({ endpoint: data.endpoint });
     })
     .catch(util.error);
@@ -43,13 +45,7 @@ var initRepo = function(obj) {
         user: obj.username,
         project: obj.project,
         endpoint: endpoint
-      }).save(function(err, result) {
-        if (err) {
-          deferred.reject(new Error(err));
-        } else {
-          deferred.resolve(result);
-        }
-      });
+      }).save(deferred.makeNodeResolver());
     });
 
   return deferred.promise;
@@ -59,10 +55,10 @@ var validateInit = function(obj) {
   var deferred = Q.defer();
   var valid = util.validateObj(obj, ['username', 'project', 'timestamp']);
   if (!valid) { deferred.reject(new Error('Invalid data')); }
-  findRepo(obj)
+  util.findRepo(obj)
     .then(function(data) {
       if (data.length) {
-        deferred.reject(new Error("Project already exists"));
+        deferred.reject(new Error('Project already exists'));
       } else {
         deferred.resolve(obj);
       }
@@ -70,14 +66,5 @@ var validateInit = function(obj) {
   return deferred.promise;
 };
 
-var findRepo = function(obj) {
-  var deferred = Q.defer();
-  var query = {
-    user: obj.username,
-    project: obj.project
-  };
-  db.Repo.find(query, deferred.makeNodeResolver());
-  return deferred.promise;
-};
 
 module.exports = initHandler;

@@ -1,5 +1,6 @@
 var files = require('./files.js');
 var config = require('./config.js');
+var db = require('../db/config.js');
 var path = require('path');
 var fs = require('fs');
 var ncp = require('ncp').ncp;
@@ -7,8 +8,8 @@ var git = require('gift');
 var Q = require('q');
 
 module.exports.error = error = function(err) {
-  console.log(err);
-  res.send(500);
+  console.log(err.message);
+  res.send(500, err.message);
   // send error code?
 };
 
@@ -59,4 +60,57 @@ module.exports.validateObj = function(obj, properties) {
     }
   }
   return true;
+};
+
+module.exports.findRepo = function(obj) {
+  var deferred = Q.defer();
+  var query = {
+    user: obj.username,
+    project: obj.project
+  };
+  db.Repo.find(query, deferred.makeNodeResolver());
+  return deferred.promise;
+};
+
+module.exports.findRunLog = function(obj, status) {
+  status = status || 'all';
+  var deferred = Q.defer();
+  var query = {
+    user: obj.username,
+    project: obj.project
+  };
+  db.RunLog.find(query, function(err, data) {
+    if (err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(filterRunLogs(data, status));
+    }
+  });
+  return deferred.promise;
+};
+
+var filterRunLogs = function(runLogs, status) {
+  var filters = {
+    all: function(data) { return data; },
+    running: function(data) {
+      var result = [];
+      data.forEach(function(x) {
+        if (!x.completed) {
+          result.push(x);
+        }
+      });
+      return result;
+    },
+    completed: function(data) {
+      var result = [];
+      data.forEach(function(x) {
+        if(x.completed) {
+          result.push(x);
+        }
+      });
+      return result;
+    }
+  };
+
+  return filters[status](runLogs);
 };

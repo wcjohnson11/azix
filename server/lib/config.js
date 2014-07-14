@@ -4,5 +4,6 @@ module.exports = {
   dbhost: process.env.DBHOST || 'localhost',
   dbname: 'azix',
   bareRepo: 'assets/bareRepo.git',
-  repositories: 'repos'
+  repositories: 'repos',
+  ami: 'ami-5a75b432'
 };
