@@ -1,10 +1,17 @@
+var allFiles = [
+  '*.js',
+  'lib/**/*.js',
+  'db/**/*.js',
+  'routes/**/*.js'
+];
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
     jshint: {
-      all: ['*.js', 'lib/**/*.js']
+      all: allFiles
     },
 
     mochaTest: {
@@ -18,7 +25,7 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['lib/**/*.js']
+        files: allFiles
       }
     },
 
