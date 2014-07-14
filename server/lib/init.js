@@ -1,5 +1,5 @@
 var util = require('./util.js');
-var repo = require('./files.js').repo;
+var repo = require('./files.js').repoPath;
 var db = require('../db/config.js');
 var Q = require('q');
 
@@ -9,14 +9,14 @@ var initHandler = function(req, res) {
 
     1. Receives data with client info
     2. Checks if project already exists
-    3. Creates uid with that data
-    4. Clones (forks?) base repo
-    5. Adds Repo data to DB
-    6. Sends back data to client { uid, repoEndpoint }
+    3. Clones (forks?) base repo
+    4. Adds Repo data to DB
+    5. Sends back data to client { endpoint: repo endpoint }
 
     arguments:
     req, res
-    req.body will be an object with { username, timestamp, projectname }
+    req.body will be an object with { username, timestamp, project }
+    res.body will be { endpoint: repo endpoint }
    */
 
   validateInit(req.body)
@@ -34,15 +34,14 @@ var initHandler = function(req, res) {
 
 var initRepo = function(obj) {
   var deferred = Q.defer();
-  var uid = util.createRepoUID(obj);
-  var repoPath = repo(uid);
+  var repoPath = repo(obj);
 
   util.cloneBare(repoPath)
     .then(function(dest) {
       var endpoint = util.endpoint(dest);
       new db.Repo({
         user: obj.username,
-        project: obj.projectname,
+        project: obj.project,
         endpoint: endpoint
       }).save(function(err, result) {
         if (err) {
@@ -58,7 +57,7 @@ var initRepo = function(obj) {
 
 var validateInit = function(obj) {
   var deferred = Q.defer();
-  var valid = util.validateObj(obj, ['username', 'projectname', 'timestamp']);
+  var valid = util.validateObj(obj, ['username', 'project', 'timestamp']);
   if (!valid) { deferred.reject(new Error('Invalid data')); }
   findRepo(obj)
     .then(function(data) {
@@ -75,7 +74,7 @@ var findRepo = function(obj) {
   var deferred = Q.defer();
   var query = {
     user: obj.username,
-    project: obj.projectname
+    project: obj.project
   };
   db.Repo.find(query, deferred.makeNodeResolver());
   return deferred.promise;

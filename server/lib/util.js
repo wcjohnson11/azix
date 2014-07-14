@@ -47,15 +47,9 @@ module.exports.cloneBare = function(dest) {
   return deferred.promise;
 };
 
-module.exports.createRepoUID = function(obj) {
-  /*
-    Creates a unique identifier to use as a repo name.
-  */
-  return path.join(obj.username, obj.projectname);
-};
-
 module.exports.endpoint = function(file) {
-  return path.join(config.host + ':', file);
+  file = file.replace(/\.[^/.]+$/, '');
+  return  ['http://' + config.host + ':' + config.port, file].join('/');
 };
 
 module.exports.validateObj = function(obj, properties) {

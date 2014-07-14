@@ -1,6 +1,11 @@
 var path = require('path');
 var repositories = require('./config.js').repositories;
 
-module.exports.repo = function(uid) {
-  return path.join(repositories, uid);
+module.exports.repoPath = function(username, project) {
+  if (arguments[1] === undefined) {
+    // So that this will take an object with { username, project }
+    project = username.project;
+    username = username.username;
+  }
+  return path.join(repositories, username, project + '.git');
 };
