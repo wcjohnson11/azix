@@ -23,5 +23,9 @@ var runLogSchema = new Schema({
   completeCommit: { type: String },
   ami: { type: String, required: true }
 });
+runLogSchema.plugin(timestamps);
+
+var RunLog = mongoose.model('RunLog', runLogSchema);
 
 module.exports.Repo = Repo;
+module.exports.RunLog = RunLog;
