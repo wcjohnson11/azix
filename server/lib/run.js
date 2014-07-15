@@ -1,7 +1,26 @@
 var util = require('./util.js');
 var config = require('./config.js');
 var db = require('../db/config.js');
+var AWS = require('aws-sdk');
+var EC2 = require('ec2-event');
+var _ = require('underscore');
 var Q = require('q');
+
+var awsConfig = {
+  accessKeyId: config.awsAccessKeyId,
+  secretAccessKey: config.awsSecretAccessKey,
+  region: "us-east-1"
+};
+
+_.defaults(AWS.config, awsConfig);
+
+var ec2Config = {
+  ImageId: config.ami,
+  InstanceType: 't1.micro',
+  MinCount: 1,
+  MaxCount: 1,
+  KeyName: 'sd'
+};
 
 var runHandler = function(req, res) {
   /*
@@ -74,11 +93,22 @@ var validateRunLog = function(obj) {
 };
 
 var vmStart = function(arr) {
+  var deferred = Q.defer();
   var obj = arr[0];
-  console.log("starting vm");
-  // define running event listener here
-  obj.instanceId = "x123";
-  return obj;
+  var ec2 = new EC2(ec2Config);
+
+  ec2.on('starting', function() {
+    obj.instanceId = ec2.instanceIds[0];
+    deferred.resolve(obj);
+  });
+
+  ec2.on('running', function() {
+    ec2.terminate();
+  });
+
+  ec2.start();
+
+  return deferred.promise;
 };
 
 var dbWrite = function(obj) {

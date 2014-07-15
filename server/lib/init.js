@@ -26,7 +26,6 @@ var initHandler = function(req, res) {
     })
     .then(initRepo)
     .then(function(data) {
-      console.log(data);
       if (data.length) { data = data[0]; }
       res.send({ endpoint: data.endpoint });
     })
