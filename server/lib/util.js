@@ -59,7 +59,8 @@ module.exports.endpoint = function(file) {
 
 module.exports.repoFromEndpoint = function(endpoint) {
   endpoint = endpoint.split('/');
-  return path.join.apply(null, endpoint.slice(endpoint.length - 3)) + '.git';
+  endpoint = path.join.apply(null, endpoint.slice(endpoint.length - 2));
+  return path.join(config.repositories, endpoint + '.git');
 };
 
 module.exports.validateObj = function(obj, properties) {

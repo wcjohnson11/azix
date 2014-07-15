@@ -5,6 +5,7 @@ var AWS = require('aws-sdk');
 var EC2 = require('ec2-event');
 var _ = require('underscore');
 var Q = require('q');
+var git = require('gift');
 
 var awsConfig = {
   accessKeyId: config.awsAccessKeyId,
@@ -45,11 +46,12 @@ var runHandler = function(req, res) {
       res.send(400, e.message);
       throw e;
     })
+    .then(function(data) {
+      res.send(201, "Process started");
+      return data;
+    })
     .then(vmStart)
     .then(dbWrite)
-    .then(function() {
-      res.send(201, "Process started");
-    })
     .catch(util.error);
 
 };
@@ -99,15 +101,31 @@ var vmStart = function(arr) {
 
   ec2.on('starting', function() {
     obj.instanceId = ec2.instanceIds[0];
-    deferred.resolve(obj);
+    // need to get start commit
+    currentCommit(obj.endpoint)
+      .then(function(commit) {
+        obj.startCommit = commit.id;
+        deferred.resolve(obj);
+      });
   });
 
   ec2.on('running', function() {
+    // post to vm with repo/commit
     ec2.terminate();
   });
 
   ec2.start();
 
+  return deferred.promise;
+};
+
+var currentCommit = function(path) {
+  var deferred = Q.defer();
+  if (/^http/.test(path)) {
+    path = util.repoFromEndpoint(path);
+  }
+  var repo = git(path);
+  repo.current_commit(deferred.makeNodeResolver());
   return deferred.promise;
 };
 
@@ -117,7 +135,7 @@ var dbWrite = function(obj) {
     user: obj.user,
     project: obj.project,
     instanceId: obj.instanceId,
-    startCommit: 'abc',
+    startCommit: obj.startCommit,
     ami: config.ami
   }).save(deferred.makeNodeResolver());
   return deferred.promise;
