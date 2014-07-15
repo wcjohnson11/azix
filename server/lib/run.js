@@ -48,8 +48,9 @@ var runHandler = function(req, res) {
     })
     .then(function(data) {
       res.send(201, "Process started");
-      return data;
+      return data[0];
     })
+    .then(currentCommit)
     .then(vmStart)
     .then(dbWrite)
     .catch(util.error);
@@ -94,19 +95,13 @@ var validateRunLog = function(obj) {
   return deferred.promise;
 };
 
-var vmStart = function(arr) {
+var vmStart = function(obj) {
   var deferred = Q.defer();
-  var obj = arr[0];
   var ec2 = new EC2(ec2Config);
 
   ec2.on('starting', function() {
     obj.instanceId = ec2.instanceIds[0];
-    // need to get start commit
-    currentCommit(obj.endpoint)
-      .then(function(commit) {
-        obj.startCommit = commit.id;
-        deferred.resolve(obj);
-      });
+    deferred.resolve(obj);
   });
 
   ec2.on('running', function() {
@@ -119,13 +114,18 @@ var vmStart = function(arr) {
   return deferred.promise;
 };
 
-var currentCommit = function(path) {
+var currentCommit = function(obj) {
   var deferred = Q.defer();
-  if (/^http/.test(path)) {
-    path = util.repoFromEndpoint(path);
-  }
+  var path = util.repoFromEndpoint(obj.endpoint);
   var repo = git(path);
-  repo.current_commit(deferred.makeNodeResolver());
+  repo.current_commit(function(err, commit) {
+    if (err) {
+      deferred.reject(new Error(err));
+    } else {
+      obj.startCommit = commit.id;
+      deferred.resolve(obj);
+    }
+  });
   return deferred.promise;
 };
 
