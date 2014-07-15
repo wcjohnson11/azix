@@ -49,8 +49,17 @@ module.exports.cloneBare = function(dest) {
 };
 
 module.exports.endpoint = function(file) {
+
   file = file.replace(/\.[^/.]+$/, '');
-  return  ['http://' + config.host + ':' + config.port, file].join('/');
+  file = file.split('/');
+  file = file.slice(file.length - 2);
+  file = file.join('/');
+  return  'http://' + config.host + ':' + config.port + '/repos/' + file;
+};
+
+module.exports.repoFromEndpoint = function(endpoint) {
+  endpoint = endpoint.split('/');
+  return path.join.apply(null, endpoint.slice(endpoint.length - 3)) + '.git';
 };
 
 module.exports.validateObj = function(obj, properties) {
