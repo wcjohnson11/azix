@@ -8,9 +8,9 @@ var git = require('gift');
 var Q = require('q');
 
 module.exports.error = error = function(err) {
+  // why doesn't this end the response?
   console.log(err.message);
   res.send(500, err.message);
-  // send error code?
 };
 
 module.exports.clone = clone = function(dest, source) {
@@ -57,7 +57,7 @@ module.exports.endpoint = function(file) {
   return  'http://' + config.host + ':' + config.port + '/repos/' + file;
 };
 
-module.exports.repoFromEndpoint = function(endpoint) {
+module.exports.repoFromEndpoint = repoFromEndpoint = function(endpoint) {
   endpoint = endpoint.split('/');
   endpoint = path.join.apply(null, endpoint.slice(endpoint.length - 2));
   return path.join(config.repositories, endpoint + '.git');
@@ -123,4 +123,12 @@ var filterRunLogs = function(runLogs, status) {
   };
 
   return filters[status](runLogs);
+};
+
+module.exports.currentCommit = function(endpoint) {
+  var deferred = Q.defer();
+  var path = repoFromEndpoint(endpoint);
+  var repo = git(path);
+  repo.current_commit(deferred.makeNodeResolver());
+  return deferred.promise;
 };

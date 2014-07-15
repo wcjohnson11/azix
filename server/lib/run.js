@@ -42,7 +42,6 @@ var runHandler = function(req, res) {
 
   validateRun(req.body)
     .catch(function(e) {
-      console.log(e);
       res.send(400, e.message);
       throw e;
     })
@@ -50,7 +49,7 @@ var runHandler = function(req, res) {
       res.send(201, "Process started");
       return data[0];
     })
-    .then(currentCommit)
+    .then(addCurrentCommit)
     .then(vmStart)
     .then(dbWrite)
     .catch(util.error);
@@ -105,7 +104,7 @@ var vmStart = function(obj) {
   });
 
   ec2.on('running', function() {
-    // post to vm with repo/commit
+    // post to vm with repo endpoint/commit
     ec2.terminate();
   });
 
@@ -114,18 +113,16 @@ var vmStart = function(obj) {
   return deferred.promise;
 };
 
-var currentCommit = function(obj) {
+var addCurrentCommit = function(obj) {
   var deferred = Q.defer();
-  var path = util.repoFromEndpoint(obj.endpoint);
-  var repo = git(path);
-  repo.current_commit(function(err, commit) {
-    if (err) {
-      deferred.reject(new Error(err));
-    } else {
+  util.currentCommit(obj.endpoint)
+    .then(function(commit) {
       obj.startCommit = commit.id;
       deferred.resolve(obj);
-    }
-  });
+    })
+    .catch(function(e) {
+      deferred.reject(new Error(e));
+    });
   return deferred.promise;
 };
 
