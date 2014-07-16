@@ -6,6 +6,7 @@ var EC2 = require('ec2-event');
 var _ = require('underscore');
 var Q = require('q');
 var git = require('gift');
+var request = require('request');
 
 var awsConfig = {
   accessKeyId: config.awsAccessKeyId,
@@ -100,14 +101,29 @@ var vmStart = function(obj) {
 
   ec2.on('starting', function() {
     obj.instanceId = ec2.instanceIds[0];
-    deferred.resolve(obj);
   });
 
   ec2.on('running', function() {
-    // post to vm with repo endpoint/commit and instanceId
     ec2.describe()
       .then(function(data) {
-        console.log(data);
+        var publicIp = data.Reservations[0].Instances[0].PublicDnsName;
+        var data = {
+          instanceId: ec2.instanceIds[0],
+          endpoint: util.endpoint(obj),
+          startCommit: obj.startCommit
+        };
+        var options = {
+          method: 'POST',
+          url: publicIp + '/run',
+          json: data
+        };
+        request(options, function(err, response) {
+          if (err || response.statusCode !== 201) {
+            deferred.reject(new Error(err || 'Bad response from EC2'));
+          } else {
+            deferred.resolve(obj);
+          }
+        });
         ec2.terminate();
       });
   });

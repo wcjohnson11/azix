@@ -50,6 +50,10 @@ module.exports.cloneBare = function(dest) {
 
 module.exports.endpoint = function(file) {
 
+  if (typeof file === 'object') {
+    file = [file.user, file.project].join('/');
+  }
+
   file = file.replace(/\.[^/.]+$/, '');
   file = file.split('/');
   file = file.slice(file.length - 2);
