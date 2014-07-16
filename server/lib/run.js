@@ -21,7 +21,8 @@ var ec2Config = {
   InstanceType: 't1.micro',
   MinCount: 1,
   MaxCount: 1,
-  KeyName: 'sd'
+  KeyName: 'sd',
+  SecurityGroupIds: ['sg-4c2eba24']
 };
 
 var runHandler = function(req, res) {
@@ -107,15 +108,15 @@ var vmStart = function(obj) {
     ec2.describe()
       .then(function(data) {
         var publicIp = data.Reservations[0].Instances[0].PublicDnsName;
-        var data = {
+        var postData = {
           instanceId: ec2.instanceIds[0],
           endpoint: util.endpoint(obj),
           startCommit: obj.startCommit
         };
         var options = {
           method: 'POST',
-          url: publicIp + '/run',
-          json: data
+          url: 'http://' + publicIp + ':8001/run',
+          json: postData
         };
         request(options, function(err, response) {
           if (err || response.statusCode !== 201) {
@@ -124,7 +125,7 @@ var vmStart = function(obj) {
             deferred.resolve(obj);
           }
         });
-        ec2.terminate();
+        // ec2.terminate();
       });
   });
 
