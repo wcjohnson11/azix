@@ -1,4 +1,4 @@
-var config = require('../lib/config.js');
+var config = require('../../config.js');
 var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;

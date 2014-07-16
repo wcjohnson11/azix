@@ -1,5 +1,5 @@
 var files = require('./files.js');
-var config = require('./config.js');
+var config = require('../../config.js');
 var db = require('../db/config.js');
 var path = require('path');
 var fs = require('fs');

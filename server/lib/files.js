@@ -1,5 +1,5 @@
 var path = require('path');
-var repositories = require('./config.js').repositories;
+var repositories = require('../../config.js').repositories;
 
 module.exports.repoPath = function(username, project) {
   if (arguments[1] === undefined) {

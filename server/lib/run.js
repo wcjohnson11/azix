@@ -1,5 +1,5 @@
 var util = require('./util.js');
-var config = require('./config.js');
+var config = require('../../config.js');
 var db = require('../db/config.js');
 var AWS = require('aws-sdk');
 var EC2 = require('ec2-event');

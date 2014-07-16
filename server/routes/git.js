@@ -1,4 +1,4 @@
-var config = require('../lib/config.js');
+var config = require('../../config.js');
 var express = require('express');
 var pushover = require('pushover');
 var router = express.Router();

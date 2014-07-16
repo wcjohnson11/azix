@@ -1,4 +1,4 @@
-var config = require('./lib/config.js');
+var config = require('../config.js');
 var apiRouter = require('./routes/api.js');
 var gitRouter = require('./routes/git.js');
 var express = require('express');
