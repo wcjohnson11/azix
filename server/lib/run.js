@@ -37,7 +37,7 @@ var runHandler = function(req, res) {
 
     arguments:
     req, res
-    req.body will be an object with { username, project }
+    req.body will be an object with { user, project }
    */
 
   validateRun(req.body)
@@ -105,7 +105,11 @@ var vmStart = function(obj) {
 
   ec2.on('running', function() {
     // post to vm with repo endpoint/commit and instanceId
-    ec2.terminate();
+    ec2.describe()
+      .then(function(data) {
+        console.log(data);
+        ec2.terminate();
+      });
   });
 
   ec2.start();

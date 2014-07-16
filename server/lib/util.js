@@ -75,7 +75,7 @@ module.exports.validateObj = function(obj, properties) {
 module.exports.findRepo = function(obj) {
   var deferred = Q.defer();
   var query = {
-    user: obj.username,
+    user: obj.user,
     project: obj.project
   };
   db.Repo.find(query, deferred.makeNodeResolver());
@@ -86,7 +86,7 @@ module.exports.findRunLog = function(obj, status) {
   status = status || 'all';
   var deferred = Q.defer();
   var query = {
-    user: obj.username,
+    user: obj.user,
     project: obj.project
   };
   db.RunLog.find(query, function(err, data) {

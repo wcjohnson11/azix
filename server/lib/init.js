@@ -15,7 +15,7 @@ var initHandler = function(req, res) {
 
     arguments:
     req, res
-    req.body will be an object with { username, timestamp, project }
+    req.body will be an object with { user, timestamp, project }
     res.body will be { endpoint: repo endpoint }
    */
 
@@ -41,7 +41,7 @@ var initRepo = function(obj) {
     .then(function(dest) {
       var endpoint = util.endpoint(dest);
       new db.Repo({
-        user: obj.username,
+        user: obj.user,
         project: obj.project,
         endpoint: endpoint
       }).save(deferred.makeNodeResolver());
@@ -52,7 +52,7 @@ var initRepo = function(obj) {
 
 var validateInit = function(obj) {
   var deferred = Q.defer();
-  var valid = util.validateObj(obj, ['username', 'project', 'timestamp']);
+  var valid = util.validateObj(obj, ['user', 'project', 'timestamp']);
   if (!valid) { deferred.reject(new Error('Invalid data')); }
   util.findRepo(obj)
     .then(function(data) {
