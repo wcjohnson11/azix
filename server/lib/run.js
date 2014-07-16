@@ -118,14 +118,11 @@ var vmStart = function(obj) {
           url: 'http://' + publicIp + ':8001/run',
           json: postData
         };
-        request(options, function(err, response) {
-          if (err || response.statusCode !== 201) {
-            deferred.reject(new Error(err || 'Bad response from EC2'));
-          } else {
-            deferred.resolve(obj);
-          }
-        });
-        // ec2.terminate();
+
+        return forceRequest(options);
+      })
+      .then(function() {
+        deferred.resolve(obj);
       });
   });
 
@@ -133,6 +130,20 @@ var vmStart = function(obj) {
 
   return deferred.promise;
 };
+
+
+var forceRequest = function(options) {
+  var deferred = Q.defer();
+  request(options, function(err) {
+    if (err) {
+      setTimeout(function() { forceRequest(options); }, 1000);
+    } else {
+      deferred.resolve(true);
+    }
+  });
+  return deferred.promise;
+};
+
 
 var addCurrentCommit = function(obj) {
   var deferred = Q.defer();
