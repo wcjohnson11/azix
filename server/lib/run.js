@@ -104,7 +104,7 @@ var vmStart = function(obj) {
   });
 
   ec2.on('running', function() {
-    // post to vm with repo endpoint/commit
+    // post to vm with repo endpoint/commit and instanceId
     ec2.terminate();
   });
 
