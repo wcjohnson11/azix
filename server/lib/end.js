@@ -1,6 +1,6 @@
 var util = require('./util.js');
 var db = require('../db/config.js');
-var config = require('./config.js');
+var config = require('../../config.js');
 var AWS = require('aws-sdk');
 var EC2 = require('ec2-event');
 var _ = require('underscore');
@@ -27,7 +27,7 @@ var endHandler = function(req, res) {
 
     arguments:
     req, res
-    req.body is an object with { instanceId, repo endpoint, commit }
+    req.body is an object with { instanceId, repo endpoint, completeCommit }
    */
 
   validateResult(req.body)

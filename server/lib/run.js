@@ -1,11 +1,12 @@
 var util = require('./util.js');
-var config = require('./config.js');
+var config = require('../../config.js');
 var db = require('../db/config.js');
 var AWS = require('aws-sdk');
 var EC2 = require('ec2-event');
 var _ = require('underscore');
 var Q = require('q');
 var git = require('gift');
+var request = require('request');
 
 var awsConfig = {
   accessKeyId: config.awsAccessKeyId,
@@ -20,7 +21,8 @@ var ec2Config = {
   InstanceType: 't1.micro',
   MinCount: 1,
   MaxCount: 1,
-  KeyName: 'sd'
+  KeyName: 'sd',
+  SecurityGroupIds: ['sg-4c2eba24']
 };
 
 var runHandler = function(req, res) {
@@ -37,7 +39,7 @@ var runHandler = function(req, res) {
 
     arguments:
     req, res
-    req.body will be an object with { username, project }
+    req.body will be an object with { user, project }
    */
 
   validateRun(req.body)
@@ -49,9 +51,9 @@ var runHandler = function(req, res) {
       res.send(201, "Process started");
       return data[0];
     })
+    .then(dbWrite)
     .then(addCurrentCommit)
     .then(vmStart)
-    .then(dbWrite)
     .catch(util.error);
 
 };
@@ -100,12 +102,29 @@ var vmStart = function(obj) {
 
   ec2.on('starting', function() {
     obj.instanceId = ec2.instanceIds[0];
-    deferred.resolve(obj);
+    obj.save(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
 
   ec2.on('running', function() {
-    // post to vm with repo endpoint/commit
-    ec2.terminate();
+    ec2.describe()
+      .then(function(data) {
+        var publicIp = data.Reservations[0].Instances[0].PublicDnsName;
+        var postData = {
+          instanceId: ec2.instanceIds[0],
+          endpoint: util.endpoint(obj),
+          startCommit: obj.startCommit
+        };
+        var options = {
+          method: 'POST',
+          url: 'http://' + publicIp + ':8001/run',
+          json: postData
+        };
+        return forceRequest(options);
+      });
   });
 
   ec2.start();
@@ -113,8 +132,24 @@ var vmStart = function(obj) {
   return deferred.promise;
 };
 
+
+var forceRequest = function(options) {
+  var deferred = Q.defer();
+  request(options, function(err) {
+    if (err) {
+      setTimeout(function() { forceRequest(options); }, 1000);
+    } else {
+      deferred.resolve(true);
+    }
+  });
+  return deferred.promise;
+};
+
+
 var addCurrentCommit = function(obj) {
   var deferred = Q.defer();
+  obj = obj[0];
+  obj.endpoint = util.endpoint(obj);
   util.currentCommit(obj.endpoint)
     .then(function(commit) {
       obj.startCommit = commit.id;
@@ -131,8 +166,6 @@ var dbWrite = function(obj) {
   new db.RunLog({
     user: obj.user,
     project: obj.project,
-    instanceId: obj.instanceId,
-    startCommit: obj.startCommit,
     ami: config.ami
   }).save(deferred.makeNodeResolver());
   return deferred.promise;

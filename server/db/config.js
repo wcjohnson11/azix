@@ -1,4 +1,4 @@
-var config = require('../lib/config.js');
+var config = require('../../config.js');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var timestamps = require('mongoose-timestamp');
@@ -21,9 +21,9 @@ var Repo = mongoose.model('Repo', repoSchema);
 var runLogSchema = new Schema({
   user: { type: String, required: true },
   project: { type: String, required: true },
-  instanceId: { type: String, required: true },
+  instanceId: { type: String },
   started: { type: Date, default: Date.now },
-  startCommit: { type: String, required: true },
+  startCommit: { type: String },
   completed: { type: Date },
   completeCommit: { type: String },
   ami: { type: String, required: true }
