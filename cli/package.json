@@ -25,6 +25,6 @@
     "underscore": "^1.6.0"
   },
   "bin": {
-    "azix": "cli/index.js"
+    "azix": "index.js"
   }
 }
