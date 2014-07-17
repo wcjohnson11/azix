@@ -5,7 +5,7 @@ module.exports = {
   dbname: 'azix',
   bareRepo: 'assets/bareRepo.git',
   repositories: '/tmp/repos',
-  ami: 'ami-70ed2118', // Ubuntu 12.04 LTS
+  ami: 'ami-eaef2382', // Ubuntu 12.04 LTS
   awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
   awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   ec2RepoPath: '/tmp/repo'
