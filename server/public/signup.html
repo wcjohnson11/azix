@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/cs-select.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/cs-skin-elastic.css" />
+    <title>Azix - Signup</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="codrops-header">
+        <h1>Azix*</h1>
+        <nav class="codrops-demos">
+          <a href="index.html">Home</a>
+          <a class="current-demo" href="signup.html">Sign Up</a>
+        </nav>
+      </header>
+      <div>
+        <p class = "intro"> Azix abstracts away execution and version-control from data analytics by giving the user a simple navigable web interface to run scripts on AWS VMs and easily access and share the output. </p>
+      </div>
+      <section>
+        <select class="cs-select cs-skin-elastic">
+          <option value="" disabled selected>Sign Up Now!</option>
+          <option value="Email">Email</option>
+          <option value="Github">GitHub</option>
+          <option value="Twitter">Twitter</option>
+          <option value="Google">Google</option>
+        </select>
+      </section>
+    </div><!-- /container -->
+    <script src="assets/js/classie.js"></script>
+    <script src="assets/js/selectFx.js"></script>
+    <script>
+      (function() {
+        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+          new SelectFx(el);
+        } );
+      })();
+    </script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>-->
+    <!--<script src="../routes/api.js"></script>-->
+  </body>
+</html>
+
+
