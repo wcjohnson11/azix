@@ -27,7 +27,11 @@ var ec2Config = {
 
 var runHandler = function(req, res) {
   /*
-    Main handler for the POST received from the command line run command
+    Main handler for the POST received from the command line run command.
+    The commit shas are only used for validation on the ec2 instance.
+    The db writes are spread out because doing them directly before/after
+    vmStart was killing everything. So either it would write to the db and not
+    start the EC2 instance, or start the EC2 instance but not write to the db.
 
     1. Receives data with client project info
     2. Checks to see if that client/project combo is already running a process
@@ -116,7 +120,8 @@ var vmStart = function(obj) {
         var postData = {
           instanceId: ec2.instanceIds[0],
           endpoint: util.endpoint(obj),
-          startCommit: obj.startCommit
+          startCommit: obj.startCommit,
+          finalEndpoint: 'http://' + config.host + ':' + config.port + '/api/end'
         };
         var options = {
           method: 'POST',
@@ -134,6 +139,11 @@ var vmStart = function(obj) {
 
 
 var forceRequest = function(options) {
+  /*
+    This is really hacky but it seems like the EC2 instance is starting and
+    the "running" event is firing before upstart has started the node server.
+    So we just keep on sending the request until it goes through.
+  */
   var deferred = Q.defer();
   request(options, function(err) {
     if (err) {
