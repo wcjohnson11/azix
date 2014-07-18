@@ -26,7 +26,8 @@ var runLogSchema = new Schema({
   startCommit: { type: String },
   completed: { type: Date },
   completeCommit: { type: String },
-  ami: { type: String, required: true }
+  ami: { type: String, required: true },
+  code: { type: Number }
 });
 runLogSchema.plugin(timestamps);
 var RunLog = mongoose.model('RunLog', runLogSchema);
