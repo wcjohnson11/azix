@@ -120,7 +120,8 @@ var vmStart = function(obj) {
         var postData = {
           instanceId: ec2.instanceIds[0],
           endpoint: util.endpoint(obj),
-          startCommit: obj.startCommit
+          startCommit: obj.startCommit,
+          endpoint: 'http://' + config.host + ':' + config.port + '/api/end'
         };
         var options = {
           method: 'POST',
