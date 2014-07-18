@@ -79,6 +79,7 @@ var dbWrite = function(obj) {
       }
       doc.completed = new Date();
       doc.completeCommit = obj.completeCommit;
+      doc.code = obj.code;
       doc.save(function(err) {
         if (err) {
           deferred.reject(new Error(err));
