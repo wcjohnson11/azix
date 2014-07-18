@@ -52,7 +52,7 @@ var initRepo = function(obj) {
 
 var validateInit = function(obj) {
   var deferred = Q.defer();
-  var valid = util.validateObj(obj, ['user', 'project', 'timestamp']);
+  var valid = util.validateObj(obj, ['user', 'project']);
   if (!valid) { deferred.reject(new Error('Invalid data')); }
   util.findRepo(obj)
     .then(function(data) {
