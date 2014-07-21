@@ -27,6 +27,7 @@ var runLogSchema = new Schema({
   completed: { type: Date },
   completeCommit: { type: String },
   ami: { type: String, required: true },
+  instanceType: { type: String, required: true },
   code: { type: Number }
 });
 runLogSchema.plugin(timestamps);

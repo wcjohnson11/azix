@@ -176,7 +176,8 @@ var dbWrite = function(obj) {
   new db.RunLog({
     user: obj.user,
     project: obj.project,
-    ami: config.ami
+    ami: config.ami,
+    instanceType: ec2Config.InstanceType,
   }).save(deferred.makeNodeResolver());
   return deferred.promise;
 };
