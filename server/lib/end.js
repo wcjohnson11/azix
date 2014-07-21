@@ -1,19 +1,9 @@
 var util = require('./util.js');
 var db = require('../db/config.js');
 var config = require('../../config.js');
-var AWS = require('aws-sdk');
+var AWS = require('./aws-config.js').AWS;
 var EC2 = require('ec2-event');
-var _ = require('underscore');
 var Q = require('q');
-
-var awsConfig = {
-  accessKeyId: config.awsAccessKeyId,
-  secretAccessKey: config.awsSecretAccessKey,
-  region: "us-east-1"
-};
-
-_.defaults(AWS.config, awsConfig);
-
 
 var endHandler = function(req, res) {
   /*
