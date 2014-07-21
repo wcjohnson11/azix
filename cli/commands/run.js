@@ -58,10 +58,7 @@ var notifyServer = function () {
 };
 
 var run = function () {
-  gitAdd('scripts')
-  .then(function(){
-    gitAdd('data');
-  })
+  gitAdd('.')
   .then(gitCommit)
   .then(gitPush)
   .then(notifyServer)
