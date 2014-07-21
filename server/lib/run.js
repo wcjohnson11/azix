@@ -1,33 +1,21 @@
 var util = require('./util.js');
 var config = require('../../config.js');
 var db = require('../db/config.js');
-var AWS = require('aws-sdk');
+var AWS = require('./aws-config.js').AWS;
+var ec2Config = require('./aws-config.js').ec2Config;
 var EC2 = require('ec2-event');
-var _ = require('underscore');
 var Q = require('q');
 var git = require('gift');
 var request = require('request');
 
-var awsConfig = {
-  accessKeyId: config.awsAccessKeyId,
-  secretAccessKey: config.awsSecretAccessKey,
-  region: "us-east-1"
-};
-
-_.defaults(AWS.config, awsConfig);
-
-var ec2Config = {
-  ImageId: config.ami,
-  InstanceType: 't1.micro',
-  MinCount: 1,
-  MaxCount: 1,
-  KeyName: 'sd',
-  SecurityGroupIds: ['sg-4c2eba24']
-};
 
 var runHandler = function(req, res) {
   /*
-    Main handler for the POST received from the command line run command
+    Main handler for the POST received from the command line run command.
+    The commit shas are only used for validation on the ec2 instance.
+    The db writes are spread out because doing them directly before/after
+    vmStart was killing everything. So either it would write to the db and not
+    start the EC2 instance, or start the EC2 instance but not write to the db.
 
     1. Receives data with client project info
     2. Checks to see if that client/project combo is already running a process
@@ -116,7 +104,8 @@ var vmStart = function(obj) {
         var postData = {
           instanceId: ec2.instanceIds[0],
           endpoint: util.endpoint(obj),
-          startCommit: obj.startCommit
+          startCommit: obj.startCommit,
+          finalEndpoint: 'http://' + config.host + ':' + config.port + '/api/end'
         };
         var options = {
           method: 'POST',
@@ -134,6 +123,11 @@ var vmStart = function(obj) {
 
 
 var forceRequest = function(options) {
+  /*
+    This is really hacky but it seems like the EC2 instance is starting and
+    the "running" event is firing before upstart has started the node server.
+    So we just keep on sending the request until it goes through.
+  */
   var deferred = Q.defer();
   request(options, function(err) {
     if (err) {
@@ -166,7 +160,8 @@ var dbWrite = function(obj) {
   new db.RunLog({
     user: obj.user,
     project: obj.project,
-    ami: config.ami
+    ami: config.ami,
+    instanceType: ec2Config.InstanceType,
   }).save(deferred.makeNodeResolver());
   return deferred.promise;
 };

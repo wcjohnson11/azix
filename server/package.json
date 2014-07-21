@@ -10,6 +10,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "aws-sdk": "^2.0.7",
+    "bcrypt": "^0.7.8",
     "body-parser": "~1.4.3",
     "ec2-event": "0.0.1",
     "express": "~4.5.1",

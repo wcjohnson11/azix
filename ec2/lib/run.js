@@ -4,6 +4,7 @@ var Q = require('q');
 var path = require('path');
 var fs = require('fs');
 var request = require('request');
+var _ = require('underscore');
 var spawn = require('child_process').spawn;
 
 var runHandler = function(req, res) {
@@ -17,7 +18,7 @@ var runHandler = function(req, res) {
 
     req.body will be { instanceId, endpoint, startCommit }
    */
-
+  console.log(req.body);
   cloneEndpoint(req.body)
     .then(validateRepo)
     .then(function(data) {
@@ -30,7 +31,7 @@ var runHandler = function(req, res) {
     .then(push)
     .then(notifyServer)
     .catch(function(err) {
-      res.send(500, err.message);
+      console.log(err);
     });
 
 };
@@ -62,24 +63,44 @@ var validateRepo = function(obj) {
   return deferred.promise;
 };
 
+var findMain = function(scripts) {
+  var files = fs.readdirSync(scripts);
+  return path.join(
+    scripts,
+    _.filter(files, function(f) { return f.match('^main'); })[0]
+  );
+};
+
+var inferCmd = function(file) {
+  if (file.match('R$')) {
+    return 'Rscript';
+  }
+  if (file.match('py$')) {
+    return 'python';
+  }
+  return 'sh';
+};
+
 var start = function(obj) {
   var repo = obj.repo;
   var deferred = Q.defer();
-  var main = path.join(repo.path, 'scripts', 'main.R');
+  var main = findMain(path.join(repo.path, 'scripts'));
   var outputFile = path.join(repo.path, 'output', 'output.txt');
   var errFile = path.join(repo.path, 'output', 'err.txt');
   var out = fs.createWriteStream(outputFile, 'w');
   var err = fs.createWriteStream(errFile, 'w');
-  var process = spawn('Rscript', [main], { cwd: path.dirname(main) });
+  var cmd = inferCmd(main);
+  var process = spawn(cmd, [main], { cwd: path.dirname(main) });
   process.stdout.on('data', function(data) {
     out.write(data);
   });
   process.stderr.on('data', function(data) {
     err.write(data);
   });
-  process.on('close', function() {
+  process.on('close', function(code) {
     err.end();
     out.end();
+    obj.code = code;
     deferred.resolve(obj);
   });
   return deferred.promise;
@@ -131,11 +152,12 @@ var notifyServer = function(obj) {
       var data = {
         instanceId: obj.req.instanceId,
         completeCommit: commit.id,
-        endpoint: obj.req.endpoint
+        endpoint: obj.req.endpoint,
+        code: obj.code
       };
       var options = {
         method: 'POST',
-        url: 'http://' + config.host + ':' + config.port + '/api/end',
+        url: obj.req.finalEndpoint,
         json: data
       };
       request(options, function(err, response) {
