@@ -1,29 +1,13 @@
 var util = require('./util.js');
 var config = require('../../config.js');
 var db = require('../db/config.js');
-var AWS = require('aws-sdk');
+var AWS = require('./aws-config.js').AWS;
+var ec2Config = require('./aws-config.js').ec2Config;
 var EC2 = require('ec2-event');
-var _ = require('underscore');
 var Q = require('q');
 var git = require('gift');
 var request = require('request');
 
-var awsConfig = {
-  accessKeyId: config.awsAccessKeyId,
-  secretAccessKey: config.awsSecretAccessKey,
-  region: "us-east-1"
-};
-
-_.defaults(AWS.config, awsConfig);
-
-var ec2Config = {
-  ImageId: config.ami,
-  InstanceType: 't1.micro',
-  MinCount: 1,
-  MaxCount: 1,
-  KeyName: 'sd',
-  SecurityGroupIds: ['sg-4c2eba24']
-};
 
 var runHandler = function(req, res) {
   /*
