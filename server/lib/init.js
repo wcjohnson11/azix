@@ -15,7 +15,7 @@ var initHandler = function(req, res) {
 
     arguments:
     req, res
-    req.body will be an object with { user, timestamp, project }
+    req.body will be an object with { user, project }
     res.body will be { endpoint: repo endpoint }
    */
 
