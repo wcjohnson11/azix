@@ -17,7 +17,7 @@ var endHandler = function(req, res) {
 
     arguments:
     req, res
-    req.body is an object with { instanceId, repo endpoint, completeCommit }
+    req.body is an object with { instanceId, repo endpoint, completeCommit, exitCode }
    */
 
   validateResult(req.body)
