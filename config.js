@@ -1,7 +1,11 @@
+// mongodb://<dbuser>:<dbpassword>@ds059938.mongolab.com:59938/azix
+
 module.exports = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT || 8000,
-  dbhost: process.env.DBHOST || 'localhost',
+  dbhost: process.env.DBHOST || 'ds059938.mongolab.com:59938',
+  dbuser: 'azix',
+  dbpassword: process.env.DBPASSWORD || 'azix',
   dbname: 'azix',
   bareRepo: 'assets/bareRepo.git',
   repositories: process.env.NODE_ENV === 'prod' ? '/home/ubuntu/repos' : '/tmp/repos',

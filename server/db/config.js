@@ -5,7 +5,9 @@ var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect('mongodb://' + config.dbhost + '/' + config.dbname);
+var db = 'mongodb://' + config.dbuser + ':' +
+  config.dbpassword + '@' + config.dbhost  + '/' + config.dbname;
+mongoose.connect(db);
 
 
 var repoSchema = new Schema({

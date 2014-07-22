@@ -1,5 +1,4 @@
-# echo Defaults:root \!requiretty >> /etc/sudoers
-# yum install -y mongodb
-cd server
-npm install
+npm install -g bower
+cd server/public && bower install
+cd .. && npm install
 node server.js
