@@ -1,6 +1,6 @@
 var config = require('../../config.js');
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 var SALT_WORK_FACTOR = 10;
@@ -53,7 +53,7 @@ var UserSchema = new Schema({
     password: { type: String, required: true }
 });
 
-UserSchema.pre('save', function(next) {
+/*UserSchema.pre('save', function(next) {
     var user = this;
     if (!user.isModified('password')) return next();
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
@@ -71,7 +71,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
         if (err) return cb(err);
         cb(null, isMatch);
     });
-};
+};*/
 var User = mongoose.model('User', UserSchema);
 
 
