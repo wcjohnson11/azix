@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "start": "sh ./deploy.sh"
-  }
-}
