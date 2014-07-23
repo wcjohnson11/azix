@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 
-<html ng-app='app'>
+<html>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">-->
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="assets/css/normalize.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
     <title>Azix</title>
   </head>
-  <body>
+
+  <body ng-app='app'>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="app/app.js"></script>
     
+  <div ui-view></div>
 
 <!--     <div>
       <header class="codrops-header">
@@ -65,6 +68,6 @@
       </div>
     </div>  -->
 
+
     <script src="assets/js/angular-animate.js"></script>
-    <script src="app/app.js"></script>
   </body>
