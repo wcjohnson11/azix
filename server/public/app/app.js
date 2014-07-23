@@ -1,8 +1,12 @@
 angular.module('app', ['ui.router']) //dont forget to load factories
 
-.controller('ProjectsCtrl', function($scope, $state){
+.controller('ProjectsCtrl', function($scope, $state, Projects){
   $scope.data = {};
   $scope.data.test = "sup mike"
+  $scope.data.user = localStorage.getItem('user') || "default";
+  Projects.getProjects($scope.data.user).then(function(response){
+    $scope.data.projects = response
+  })
 })
 
 .run(
@@ -45,53 +49,23 @@ angular.module('app', ['ui.router']) //dont forget to load factories
 })
 
 
-/*.controller('FormCtrl', ['$scope', '$animate', function($scope, $animate) {
+.factory('Projects', function($http) {
+  // Might use a resource here that returns a JSON array
 
-  // hide error messages until 'submit' event
-  $scope.submitted = false;
+  //test data
 
-  // hide success message
-  $scope.showMessage = false;
-
-  // method called from shakeThat directive
-  $scope.submit = function() {
-    // show success message
+  //return entire list of friends
+  var getProjects = function(user){
+    //returns results of ajax get request to api/links
+    return $http({
+      method: 'GET',
+      url: '/api/' + user + '/projects'
+    });
   };
 
-}])*/
-
-/*.directive('shakeThat', ['$animate', function($animate) {
-
+  //functions injected when Friends is injected
   return {
-    require: '^form',
-    scope: {
-      submit: '&',
-      submitted: '='
-    },
-    link: function(scope, element, attrs, form) {
-
-      // listen on submit event
-      element.on('submit', function() {
-
-        // tell angular to update scope
-        scope.$apply(function() {
-
-          // everything ok -> call submit fn from controller
-          if (form.$valid) return scope.submit();
-
-          // show error messages on submit
-          scope.submitted = true;
-
-          // shake that form
-          $animate.addClass(element, 'shake', function() {
-            $animate.removeClass(element, 'shake');
-          });
-
-        });
-
-      });
-
-    }
-  };
-
-}]);*/
+    //actual functions
+    getProjects: getProjects
+  }
+})

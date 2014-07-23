@@ -10,7 +10,7 @@ var listHandler = function(req, res) {
     } else {
       console.log(docs);
       //maybe we have to return res.send instead?
-      return res.render('list', { user: req.params.user, docs: docs });
+      return res.json(200, docs);
     }
   });
 
