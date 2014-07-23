@@ -5,7 +5,7 @@ angular.module('app', ['ui.router', 'factories']) //dont forget to load factorie
   $scope.data.test = "sup mike"
   $scope.data.user = localStorage.getItem('user') || "test";
   Projects.getProjects($scope.data.user).then(function(response){
-    $scope.data.projects = response;
+    $scope.data.projects = response.data;
   })
 })
 
