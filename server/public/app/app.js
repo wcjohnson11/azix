@@ -32,6 +32,11 @@ angular.module('app', ['ui.router']) //dont forget to load factories
       templateUrl: '/app/projects.html',
       controller: 'ProjectsCtrl'
     })
+    .state('home', {
+      url: '/home',
+      templateUrl: '/app/home.html',
+      controller: 'HomeCtrl'
+    })
 
 
   // if none of the above states are matched, use this as the fallback
