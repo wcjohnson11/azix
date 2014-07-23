@@ -3,9 +3,9 @@ angular.module('app', ['ui.router']) //dont forget to load factories
 .controller('ProjectsCtrl', function($scope, $state, Projects){
   $scope.data = {};
   $scope.data.test = "sup mike"
-  $scope.data.user = localStorage.getItem('user') || "default";
+  $scope.data.user = localStorage.getItem('user') || "test";
   Projects.getProjects($scope.data.user).then(function(response){
-    $scope.data.projects = response
+    $scope.data.projects = response;
   })
 })
 
@@ -68,4 +68,4 @@ angular.module('app', ['ui.router']) //dont forget to load factories
     //actual functions
     getProjects: getProjects
   }
-})
+});
