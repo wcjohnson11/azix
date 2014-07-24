@@ -5,15 +5,21 @@ h1>{{data.projects}}</h1>
 	<li ng-if="!project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: Incomplete</li>
 </ul>
 
-<p><strong>Filter:</strong> {{tableParams.filter()|json}}
-
-    <table ng-table="tableParams" show-filter="true" class="table">
-        <tr ng-repeat="user in $data">
-            <td data-title="'Name'" filter="{ 'name': 'text' }">
-                {{user.name}}
-            </td>
-            <td data-title="'Age'">
-                {{user.age}}
-            </td>
-        </tr>
-    </table>
+    <button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
+    <button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
+    <div class="clearfix"></div>
+    <div loading-container="tableParams.settings().$loading">
+      <table ng-table="tableParams" show-filter="true" class="table">
+        <tbody>
+          <tr ng-repeat="user in $data">
+            <td data-title="'Name'" filter="{ 'name': 'text' }" sortable="name">
+                    {{user.name}}
+                    {{$loading}}
+                </td>
+            <td data-title="'Age'" sortable="age">
+                    {{user.age}}
+                </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

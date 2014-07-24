@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'factories']) //dont forget to load factories
+angular.module('app', ['ui.router', 'factories','ngTable']) //dont forget to load factories
 
 
 .controller('ProjectsCtrl', function($scope, $state, $filter, Projects, ngTableParams){
@@ -7,7 +7,6 @@ angular.module('app', ['ui.router', 'factories']) //dont forget to load factorie
   $scope.data.user = localStorage.getItem('user') || "test";
   Projects.getProjects($scope.data.user).then(function(response){
     $scope.data.projects = response.data;
-  });
   $scope.tableParams = new ngTableParams({
     page: 1,    //showfirst page
     count: 10,  //count per page
@@ -23,6 +22,9 @@ angular.module('app', ['ui.router', 'factories']) //dont forget to load factorie
         params.total(orderedData.length);
       }
   });
+
+  });
+
 })
 
 .run(
@@ -83,5 +85,19 @@ angular.module('app', ['ui.router', 'factories']) //dont forget to load factorie
   return {
     //actual functions
     getProjects: getProjects
-  }
+  };
+})
+.directive('loadingContainer', function () {
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function(scope, element, attrs) {
+            var loadingLayer = angular.element('<div class="loading"></div>');
+            element.append(loadingLayer);
+            element.addClass('loading-container');
+            scope.$watch(attrs.loadingContainer, function(value) {
+                loadingLayer.toggleClass('ng-hide', !value);
+            });
+        }
+    };
 });
