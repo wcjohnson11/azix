@@ -2,11 +2,11 @@
 var path = require('path');
 
 module.exports = {
-  host: process.env.HOST || 'ec2-54-89-13-96.compute-1.amazonaws.com',
+  host: process.env.HOST || 'localhost',
   port: process.env.PORT || 8000,
-  dbhost: process.env.DBHOST || 'ds059938.mongolab.com:59938',
+  dbhost: process.env.DBHOST || 'localhost',
   dbuser: 'azix',
-  dbpassword: process.env.DBPASSWORD || 'azix',
+  dbpassword: process.env.DBPASSWORD || null,
   dbname: 'azix',
   bareRepo: 'assets/bareRepo.git',
   repositories: process.env.NODE_ENV === 'prod' ? path.join(process.env.HOME, 'repos') : '/tmp/repos',
