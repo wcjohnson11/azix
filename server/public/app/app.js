@@ -69,3 +69,4 @@ angular.module('app', ['ui.router']) //dont forget to load factories
     getProjects: getProjects
   }
 });
+

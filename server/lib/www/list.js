@@ -1,5 +1,5 @@
 var Q = require('q');
-var db = require('../db/config.js');
+var db = require('../../db/config.js');
 
 // Grab the list of projects from the database RunLog
 var listHandler = function(req, res) {
