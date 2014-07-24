@@ -1,6 +1,19 @@
 <h1>{{data.test}}</h1>
 h1>{{data.projects}}</h1>
 <ul ng-repeat="project in data.projects">
-	<li ng-if="project.completed">Project Name: {{project.project}}, Status: {{project.completed}}</li>
-	<li ng-if="!project.completed">Project Name: {{project.project}}, Status: Incomplete</li>
+	<li ng-if="project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: {{project.completed}}</li>
+	<li ng-if="!project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: Incomplete</li>
 </ul>
+
+<p><strong>Filter:</strong> {{tableParams.filter()|json}}
+
+    <table ng-table="tableParams" show-filter="true" class="table">
+        <tr ng-repeat="user in $data">
+            <td data-title="'Name'" filter="{ 'name': 'text' }">
+                {{user.name}}
+            </td>
+            <td data-title="'Age'">
+                {{user.age}}
+            </td>
+        </tr>
+    </table>
