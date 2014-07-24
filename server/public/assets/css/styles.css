@@ -61,10 +61,25 @@
     transform: translateX(0);
   }
 }*/
+body {
+  background: #3686be;
+  color: #fff;
+  font-weight: 400;
+  font-size: 1em;
+  padding: 35px 10px;
+  font-family: 'Raleway', Arial, sans-serif;
+  text-align: center
+}
 
 .container {
   width: 80%;
   margin: 50px auto;
+}
+.codrops-header h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 3.5em !important;
+  line-height: 1.3;
 }
 
 /*.box-shadow {
@@ -77,20 +92,19 @@
   animation: shake 400ms ease-in-out;
 }*/
 
-.message {
+/*.message {
   margin-top: 60px;
-}
+}*/
 .home {
   background: #3686be;
   color: #fff;
-  font-weight: 400;
-  font-size: 1em;
+  font-size: 2em;
   padding: 35px 10px;
   font-family: 'Raleway', Arial, sans-serif;
   margin: 0 auto;
 }
 .login {
-  margin: 0 auto;
+  margin: 20px auto;
   width: 30%;
   position: relative;
   float: right;
@@ -104,4 +118,7 @@
 .right {
   position: relative;
   float: right;
+}
+.intro{
+  font-size: 30px
 }
