@@ -35,15 +35,17 @@ a:hover, a:focus {
 }
 
 p.intro {
-	width:50em;
-	word-wrap:break-word;
-	text-align: center;
-	font-weight: 300;
-	font-size: 150%;
-	letter-spacing: 1px;
-	padding: 1em;
-	display: block;
-	margin: 0 auto;
+  width:50em;
+  word-wrap:break-word;
+  text-align: center;
+  font-weight: 300;
+  font-size: 150%;
+  letter-spacing: 1px;
+  padding: 1em;
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+
 }
 
 section {
