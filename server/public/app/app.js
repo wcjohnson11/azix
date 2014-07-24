@@ -1,12 +1,15 @@
-angular.module('app', ['ui.router', 'factories']) //dont forget to load factories
+angular.module('app', ['ui.router', 'factories','ngTable']) //dont forget to load factories
 
-.controller('ProjectsCtrl', function($scope, $state, Projects){
+
+.controller('ProjectsCtrl', function($scope, $state, $filter, Projects, ngTableParams){
   $scope.data = {};
-  $scope.data.test = "sup mike"
   $scope.data.user = localStorage.getItem('user') || "test";
+  $scope.data.test = "sup " + $scope.data.user;
   Projects.getProjects($scope.data.user).then(function(response){
-    $scope.data.projects = response;
-  })
+    $scope.data.projects = response.data;
+
+  });
+
 })
 
 .run(
@@ -67,5 +70,19 @@ angular.module('app', ['ui.router', 'factories']) //dont forget to load factorie
   return {
     //actual functions
     getProjects: getProjects
-  }
+  };
+})
+.directive('loadingContainer', function () {
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function(scope, element, attrs) {
+            var loadingLayer = angular.element('<div class="loading"></div>');
+            element.append(loadingLayer);
+            element.addClass('loading-container');
+            scope.$watch(attrs.loadingContainer, function(value) {
+                loadingLayer.toggleClass('ng-hide', !value);
+            });
+        }
+    };
 });
