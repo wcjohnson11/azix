@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router']) //dont forget to load factories
+angular.module('app', ['ui.router', 'factories']) //dont forget to load factories
 
 .controller('ProjectsCtrl', function($scope, $state, Projects){
   $scope.data = {};
@@ -69,4 +69,3 @@ angular.module('app', ['ui.router']) //dont forget to load factories
     getProjects: getProjects
   }
 });
-
