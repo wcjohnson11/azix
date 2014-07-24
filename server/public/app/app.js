@@ -1,8 +1,9 @@
 angular.module('app', ['ui.router', 'factories']) //dont forget to load factories
 
+
 .controller('ProjectsCtrl', function($scope, $state, $filter, Projects, ngTableParams){
   $scope.data = {};
-  $scope.data.test = "sup mike"
+  $scope.data.test = "sup mike";
   $scope.data.user = localStorage.getItem('user') || "test";
   Projects.getProjects($scope.data.user).then(function(response){
     $scope.data.projects = response.data;
