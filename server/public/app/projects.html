@@ -4,22 +4,3 @@ h1>{{data.projects}}</h1>
 	<li ng-if="project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: {{project.completed}}</li>
 	<li ng-if="!project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: Incomplete</li>
 </ul>
-
-    <button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
-    <button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
-    <div class="clearfix"></div>
-    <div loading-container="tableParams.settings().$loading">
-      <table ng-table="tableParams" show-filter="true" class="table">
-        <tbody>
-          <tr ng-repeat="user in $data">
-            <td data-title="'Name'" filter="{ 'name': 'text' }" sortable="name">
-                    {{user.name}}
-                    {{$loading}}
-                </td>
-            <td data-title="'Age'" sortable="age">
-                    {{user.age}}
-                </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>

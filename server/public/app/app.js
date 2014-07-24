@@ -3,25 +3,10 @@ angular.module('app', ['ui.router', 'factories','ngTable']) //dont forget to loa
 
 .controller('ProjectsCtrl', function($scope, $state, $filter, Projects, ngTableParams){
   $scope.data = {};
-  $scope.data.test = "sup mike";
   $scope.data.user = localStorage.getItem('user') || "test";
+  $scope.data.test = "sup " + $scope.data.user;
   Projects.getProjects($scope.data.user).then(function(response){
     $scope.data.projects = response.data;
-  $scope.tableParams = new ngTableParams({
-    page: 1,    //showfirst page
-    count: 10,  //count per page
-  }, {
-      total: data.projects.length, //length of data
-      getData: function($defer, params) {
-        //use built-in angular filter
-        var orderedData = params.filter() ?
-          $filter('filter')(data, params.filter()) :
-          data;
-
-        // set total for recalculating pagination
-        params.total(orderedData.length);
-      }
-  });
 
   });
 
