@@ -12,7 +12,7 @@ router.post('/run', run);
 router.post('/end', end);
 
 //For web interface
-router.post('/create', user)
-router.get('/:user/projects', list)
+router.post('/create', user);
+router.get('/:user/projects', list);
 
 module.exports = router;
