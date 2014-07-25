@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'factories','ngTable']) //dont forget to load factories
+angular.module('app', ['ui.router', 'factories','ngTable','angularMoment']) //dont forget to load factories
 
 
 .controller('ProjectsCtrl', function($scope, $state, $filter, Projects, ngTableParams){

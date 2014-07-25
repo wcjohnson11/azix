@@ -11,10 +11,10 @@
             {{project.project}}
         </td>
         <td data-title="'Created at'">
-            {{project.createdAt}}
+            {{project.createdAt | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
         </td>
-        <td data-title="'Status'">
-        	{{project.completed}}
+        <td data-title="'Completed at'">
+        	{{project.completed | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
         </td>
     </tr>
 </table>
