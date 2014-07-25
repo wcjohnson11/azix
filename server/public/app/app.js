@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'factories','ngTable','controllers']) //dont forget to load factories
+angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angularMoment']) //dont forget to load factories
 
 .run(
   [          '$rootScope', '$state', '$stateParams',

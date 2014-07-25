@@ -8,21 +8,28 @@ angular.module('controllers', [])
     $scope.data.projects = response.data;
 
     var tableData = $scope.data.projects;
+
     
     $scope.tableParams = new ngTableParams({
-      page: 1,    //showfirst page
-      count: 10,  //count per page
+      page: 1,    // Show first page
+      count: 10,  // Count per page
       sorting: {
-        completed: 'asc'  // Sort projects in ascending order
+        completed: 'asc'  // Initial sorting
       }
     }, {
+        groupBy: 'code',  // Group projects by status code
+        filterDelay: 0,   // A delay in ms from keyup to filter
         counts: [], // Comment out this line to reveal
                     // result per page toggler
         total: tableData.length, // set length of data
         getData: function($defer, params) {
           // Filter the data if params entered
-          var orderedData = params.filter() ?
+          var filteredData = params.filter() ?
             $filter('filter')(tableData, params.filter()) :
+            tableData;
+          // Sort the data
+          var orderedData = params.filter() ?
+            $filter('orderBy')(filteredData, params.orderBy()) :
             tableData;
 
           // Set the projects that will be displayed on table

@@ -1,20 +1,21 @@
 <h1>{{data.test}}</h1>
-<!-- <ul ng-repeat="project in data.projects">
-	<li ng-if="project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: {{project.completed}}</li>
-	<li ng-if="!project.completed">Project Name: {{project.project}}, Created at: {{project.createdAt}}, Status: Incomplete</li>
-</ul> -->
 
+<!-- <input name="name" filter="{ 'project': 'text' }"> -->
 
 <table ng-table="tableParams" show-filter="true" class="table">
     <tr ng-repeat="project in projects">
-        <td data-title="'Project Name'" filter="{ 'project': 'text' }">
+        <td data-title="'Project Name'" filter="{ 'project': 'text' }" sortable="'project'">
             {{project.project}}
         </td>
-        <td data-title="'Created at'">
+        <td data-title="'Created at'" sortable="'createdAt'">
             {{project.createdAt | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
         </td>
-        <td data-title="'Completed at'">
+        <td data-title="'Completed at'" sortable="'completed'">
         	{{project.completed | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
+        </td>
+        <td data-title="'Status'" sortable="'code'">
+        	<span ng-if='project.code === 0'>Success</span>
+        	<span ng-if='project.code !== 0'>Failed</span>
         </td>
     </tr>
 </table>
