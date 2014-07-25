@@ -59,7 +59,6 @@ angular.module('controllers', [])
     }, {
         groupBy: 'code',  // Group projects by status code
         filterDelay: 0,   // A delay in ms from keyup to filter
-
         counts: [], // Comment out this line to reveal
                     // result per page toggler
         total: tableData.length, // set length of data
@@ -117,7 +116,6 @@ angular.module('controllers', [])
   };
 });
 
-});
 // .controller('UserCtrl', function($scope, $state, $filter, User, ngTableParams){
 //   $scope.data = {};
 //   $scope.data.user = localStorage.getItem('user') || "test";
