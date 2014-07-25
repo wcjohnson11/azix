@@ -3,7 +3,8 @@ angular.module('app', ['ui.router',
   'ngTable',
   'controllers',
   'angularMoment',
-  'ui.bootstrap']) //dont forget to load factories
+  'ui.bootstrap',
+  'flow']) //dont forget to load factories
 
 .run(
   [          '$rootScope', '$state', '$stateParams',
@@ -47,6 +48,21 @@ angular.module('app', ['ui.router',
   $urlRouterProvider.otherwise('/projects');
 
 })
+
+.config(['flowFactoryProvider', function(flowFactoryProvider) {
+  flowFactoryProvider.defaults = {
+    target: 'upload.php',
+    permanentErrors: [404, 500, 501],
+    maxChunkRetries: 1,
+    chunkRetryInterval: 5000,
+    simultaneousUploads: 4
+  };
+  flowFactoryProvider.on('catchAll', function (event) {
+    console.log('catchAll', arguments);
+  });
+  // Can be used with different implementations of Flow.js
+  // flowFactoryProvider.factory = fustyFlowFactory;
+}])
 
 .directive('loadingContainer', function () {
     return {
