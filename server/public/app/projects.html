@@ -10,12 +10,12 @@
       </table>
     </div>
 </div>
-
+<!-- create a filter outside of projects -->
 <!-- <input name="name" filter="{ 'project': 'text' }"> -->
 
   <body ng-app="AccordionApp">
 
-<div ng-controller="AccordionCtrl" class="datum">
+  <div ng-controller="AccordionCtrl" class="datum">
 
   <accordion close-others="oneAtATime">
     <accordion-group heading="Projects">
@@ -43,43 +43,51 @@
       	<div class="col-md-6 inputs">
       		<h3>Inputs</h3>
       		<div class="row">
-      			<div flow-init="{target: '/upload'}"
-      			     flow-files-submitted="$flow.upload()"
-      			     flow-file-success="$file.msg = $message">
+      			<div flow-init="" flow-files-submitted="$flow.upload()" class="ng-scope">
+              <div class="drop" flow-drop="" ng-class="dropClass">
+                <span class="btn btn-default" flow-btn="">Upload File<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+                <span class="btn btn-default" flow-btn="" flow-directory="" ng-show="$flow.supportDirectory">Upload Folder<input type="file" multiple="multiple" webkitdirectory="webkitdirectory" style="visibility: hidden; position: absolute;"></span>
+                <b>OR</b>
+                Drag And Drop your file here
+              </div>
+            <br>
+            <div class="well">
+              <a class="btn btn-small btn-default" ng-click="$flow.resume()">Resume all</a>
+              <a class="btn btn-small btn-default" ng-click="$flow.pause()">  Pause all</a>
+              <a class="btn btn-small btn-default" ng-click="$flow.cancel()">  Cancel all</a>
+              <span class="label label-info ng-binding">Total Size: 0bytes</span>
+            </div>
+        <!-- ngRepeat: file in $flow.files -->
+            <div ng-repeat="file in $flow.files">
 
-      			  <input type="file" flow-btn/>
-      			  Input OR Other element as upload button
-      			  <span class="btn" flow-btn>Upload File</span>
-
-      			  <table>
-      			    <tr ng-repeat="file in $flow.files">
-      			        <td>{{$index+1}}</td>
-      			        <td>{{file.name}}</td>
-      			        <td>{{file.msg}}</td>
-      			    </tr>
-      			  </table>
-      			</div>
+            </div>
+          </div>
       		</div>
         </div>
 
         <div class="col-md-6 scripts">
       	  <h3>Scripts</h3>
-          <div flow-init="{target: '/upload'}"
-               flow-files-submitted="$flow.upload()"
-               flow-file-success="$file.msg = $message">
+          <div class="row">
+                      <div flow-init="" flow-files-submitted="$flow.upload()" class="ng-scope">
+                        <div class="drop" flow-drop="" ng-class="dropClass">
+                          <span class="btn btn-default" flow-btn="">Upload File<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+                          <span class="btn btn-default" flow-btn="" flow-directory="" ng-show="$flow.supportDirectory">Upload Folder<input type="file" multiple="multiple" webkitdirectory="webkitdirectory" style="visibility: hidden; position: absolute;"></span>
+                          <b>OR</b>
+                          Drag And Drop your file here
+                        </div>
+                      <br>
+                      <div class="well">
+                        <a class="btn btn-small btn-default" ng-click="$flow.resume()">Resume all</a>
+                        <a class="btn btn-small btn-default" ng-click="$flow.pause()">  Pause all</a>
+                        <a class="btn btn-small btn-default" ng-click="$flow.cancel()">  Cancel all</a>
+                        <span class="label label-info ng-binding">Total Size: 0bytes</span>
+                      </div>
+                  <!-- ngRepeat: file in $flow.files -->
+                      <!-- <div ng-repeat="file in $flow.files"> -->
 
-            <input type="file" flow-btn/>
-            Input OR Other element as upload button
-            <span class="btn" flow-btn>Upload File</span>
-
-            <table>
-              <tr ng-repeat="file in $flow.files">
-                  <td>{{$index+1}}</td>
-                  <td>{{file.name}}</td>
-                  <td>{{file.msg}}</td>
-              </tr>
-            </table>
-          </div>
+                      </div>
+                    </div>
+                    </div>
         </div>
       </div>
     </accordion-group>
