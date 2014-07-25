@@ -59,6 +59,7 @@ angular.module('controllers', [])
     }, {
         groupBy: 'code',  // Group projects by status code
         filterDelay: 0,   // A delay in ms from keyup to filter
+
         counts: [], // Comment out this line to reveal
                     // result per page toggler
         total: tableData.length, // set length of data
@@ -115,3 +116,13 @@ angular.module('controllers', [])
     $scope.addUser(x);
   };
 });
+
+});
+// .controller('UserCtrl', function($scope, $state, $filter, User, ngTableParams){
+//   $scope.data = {};
+//   $scope.data.user = localStorage.getItem('user') || "test";
+//   $scope.data.test = "sup " + $scope.data.user;
+//   Projects.getProjects($scope.data.user).then(function(response){
+//     $scope.data.projects = response.data;
+//   });
+// })

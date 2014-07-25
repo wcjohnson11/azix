@@ -1,5 +1,6 @@
 angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angularMoment', 'ui.bootstrap']) //dont forget to load factories
 
+
 .run(
   [          '$rootScope', '$state', '$stateParams',
     function ($rootScope,   $state,   $stateParams) {
@@ -40,17 +41,18 @@ angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angula
 })
 
 
+
 .directive('loadingContainer', function () {
-  return {
-    restrict: 'A',
-    scope: false,
-    link: function(scope, element, attrs) {
-      var loadingLayer = angular.element('<div class="loading"></div>');
-      element.append(loadingLayer);
-      element.addClass('loading-container');
-      scope.$watch(attrs.loadingContainer, function(value) {
-          loadingLayer.toggleClass('ng-hide', !value);
-      });
-    }
-  };
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function(scope, element, attrs) {
+            var loadingLayer = angular.element('<div class="loading"></div>');
+            element.append(loadingLayer);
+            element.addClass('loading-container');
+            scope.$watch(attrs.loadingContainer, function(value) {
+                loadingLayer.toggleClass('ng-hide', !value);
+            });
+        }
+    };
 });
