@@ -20,6 +20,7 @@
     "angular-ui-router": "~0.2.10",
     "ng-table": "~0.3.3",
     "moment": "~2.7.0",
-    "angular-moment": "~0.7.1"
+    "angular-moment": "~0.7.1",
+    "angular-bootstrap": "~0.11.0"
   }
 }

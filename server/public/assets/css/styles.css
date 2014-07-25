@@ -122,3 +122,26 @@ body {
 .intro{
   font-size: 30px
 }
+
+.statsleft {
+  color: black;
+  font-style: bold;
+  float: left;
+}
+
+.statsright{
+  float: right;
+}
+
+.ng-cloak {
+  /* this will change to block when scope and angular is ready */
+  display:none;
+}
+
+.datum {
+  color: black;
+  text-align: center;
+}
+.header{
+  text-align: center;
+}

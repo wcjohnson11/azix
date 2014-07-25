@@ -1,8 +1,25 @@
-<h1>{{data.test}}</h1>
+<div class="session ng-cloak">
+<div class="row">
+	<div class="col-md-4"><h1>Your Dashboard</h1></div>
+	<div class="col-md-4 statsleft"><button ng-click="refresh">Refresh Logs</button></div>
+    <div class="col-md-4 statsright">
+      <table>
+      	<tr><td>Projects Complete: {{total - failed}}</td></tr>
+      	<tr><td>Projects Failed: {{failed}}</td></tr>
+      	<tr><td>Average Run Time: {{timeSum}}</td></tr>
+      </table>
+    </div>
+</div>
 
 <!-- <input name="name" filter="{ 'project': 'text' }"> -->
 
-<table ng-table="tableParams" show-filter="true" class="table">
+  <body ng-app="AccordionApp">
+
+<div ng-controller="AccordionCtrl" class="datum">
+
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="Projects">
+    <table ng-table="tableParams" show-filter="true" class="table">
     <tr ng-repeat="project in projects">
         <td data-title="'Project Name'" filter="{ 'project': 'text' }" sortable="'project'">
             {{project.project}}
@@ -14,8 +31,20 @@
         	{{project.completed | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
         </td>
         <td data-title="'Status'" sortable="'code'">
-          <span ng-if='project.code === 0'>Success</span>
-          <span ng-if='project.code !== 0'>Failed</span>
+          <span ng-if="project.code === 0">Success</span>
+          <span ng-if="project.code !== 0">Failed</span>
         </td>
     </tr>
 </table>
+      
+    </accordion-group>
+    <accordion-group heading="File Upload">
+      <p>Upload Files Here</p>
+          <button class="btn btn-small" ng-click="addItem()">Add Item</button>
+        <div ng-repeat="project in projects">{{project.project}}</div>
+    </accordion-group>
+  </accordion>
+
+
+
+</div>
