@@ -3,8 +3,7 @@ angular.module('app', ['ui.router',
   'ngTable',
   'controllers',
   'angularMoment',
-  'ui.bootstrap',
-  'angularFileUpload']) //dont forget to load factories
+  'ui.bootstrap']) //dont forget to load factories
 
 .run(
   [          '$rootScope', '$state', '$stateParams',

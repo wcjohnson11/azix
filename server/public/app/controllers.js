@@ -116,14 +116,7 @@ angular.module('controllers', [])
     console.log(x);
     $scope.addUser(x);
   };
-  })
-
-.controller('UploadCtrl', function($scope, $state, $upload){
-  $scope.onFileSelect = function($files) {
-      //$files: an array of files selected, each file has name, size, and type.
-
-};
-});
+  });
 
 // .controller('UserCtrl', function($scope, $state, $filter, User, ngTableParams){
 //   $scope.data = {};
