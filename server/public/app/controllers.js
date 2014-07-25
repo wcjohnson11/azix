@@ -64,7 +64,6 @@ angular.module('controllers', [])
         total: tableData.length, // set length of data
         getData: function($defer, params) {
           // Filter the data if params entered
-
           var filteredData = params.filter() ?
             $filter('filter')(tableData, params.filter()) :
             tableData;
