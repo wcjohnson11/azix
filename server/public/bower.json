@@ -23,6 +23,7 @@
     "angular-moment": "~0.7.1",
     "angular-bootstrap": "~0.11.0",
 	  "chai": "~1.8.0",
-    "mocha": "~1.14.0"
+    "mocha": "~1.14.0",
+    "angular-bootstrap": "~0.11.0"
   }
 }

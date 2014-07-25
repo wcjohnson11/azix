@@ -31,8 +31,8 @@
         	{{project.completed | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
         </td>
         <td data-title="'Status'" sortable="'code'">
-          <span ng-if='project.code === 0'>Success</span>
-          <span ng-if='project.code !== 0'>Failed</span>
+          <span ng-if="project.code === 0">Success</span>
+          <span ng-if="project.code !== 0">Failed</span>
         </td>
     </tr>
 </table>
@@ -48,3 +48,4 @@
 
 
 </div>
+

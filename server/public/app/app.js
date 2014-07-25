@@ -1,6 +1,5 @@
 angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angularMoment', 'ui.bootstrap']) //dont forget to load factories
 
-
 .run(
   [          '$rootScope', '$state', '$stateParams',
     function ($rootScope,   $state,   $stateParams) {
@@ -39,8 +38,6 @@ angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angula
   $urlRouterProvider.otherwise('/projects');
 
 })
-
-
 
 .directive('loadingContainer', function () {
     return {
