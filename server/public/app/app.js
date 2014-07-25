@@ -1,4 +1,10 @@
-angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angularMoment', 'ui.bootstrap']) //dont forget to load factories
+angular.module('app', ['ui.router',
+  'factories',
+  'ngTable',
+  'controllers',
+  'angularMoment',
+  'ui.bootstrap',
+  'angularFileUpload']) //dont forget to load factories
 
 .run(
   [          '$rootScope', '$state', '$stateParams',
@@ -26,6 +32,10 @@ angular.module('app', ['ui.router', 'factories','ngTable','controllers', 'angula
       url: '/projects',
       templateUrl: '/app/projects.html',
       controller: 'ProjectsCtrl'
+    })
+    .state('projects.upload', {
+      templateUrl:'/app/projects.upload.html',
+      controller: 'UploadCtrl'
     })
     .state('home', {
       url: '/home',

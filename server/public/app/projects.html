@@ -39,9 +39,49 @@
       
     </accordion-group>
     <accordion-group heading="File Upload">
-      <p>Upload Files Here</p>
-          <button class="btn btn-small" ng-click="addItem()">Add Item</button>
-        <div ng-repeat="project in projects">{{project.project}}</div>
+      <div class="row">
+      	<div class="col-md-6 inputs">
+      		<h3>Inputs</h3>
+      		<div class="row">
+      			<div flow-init="{target: '/upload'}"
+      			     flow-files-submitted="$flow.upload()"
+      			     flow-file-success="$file.msg = $message">
+
+      			  <input type="file" flow-btn/>
+      			  Input OR Other element as upload button
+      			  <span class="btn" flow-btn>Upload File</span>
+
+      			  <table>
+      			    <tr ng-repeat="file in $flow.files">
+      			        <td>{{$index+1}}</td>
+      			        <td>{{file.name}}</td>
+      			        <td>{{file.msg}}</td>
+      			    </tr>
+      			  </table>
+      			</div>
+      		</div>
+        </div>
+
+        <div class="col-md-6 scripts">
+      	  <h3>Scripts</h3>
+          <div flow-init="{target: '/upload'}"
+               flow-files-submitted="$flow.upload()"
+               flow-file-success="$file.msg = $message">
+
+            <input type="file" flow-btn/>
+            Input OR Other element as upload button
+            <span class="btn" flow-btn>Upload File</span>
+
+            <table>
+              <tr ng-repeat="file in $flow.files">
+                  <td>{{$index+1}}</td>
+                  <td>{{file.name}}</td>
+                  <td>{{file.msg}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </accordion-group>
   </accordion>
 
