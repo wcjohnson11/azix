@@ -9,8 +9,8 @@
       <div>
         <p class = "intro"> Azix abstracts away execution and version-control from data analytics by giving the user a simple navigable web interface to run scripts on AWS VMs and easily access and share the output. </p>
       </div>
-      <div ng-controller="HomeCtrl" class="login">
-        <form name="form" autocomplete="off" novalidate shake-that submitted="submitted" submit="submit()">
+      <div class="login">
+        <form ng-controller="HomeCtrl" name="form" autocomplete="off" novalidate shake-that submitted="submitted">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
@@ -18,33 +18,25 @@
               </h3>
             </div>
             <div class="panel-body">
-              <div class="form-group" ng-class="{'has-error': form.email.$invalid && submitted}">
+              <div class="form-group" >
                 <label for="email" class="control-label">Email</label>
                 <input
-                  type="email"
                   class="form-control"
-                  id="email"
-                  name="email"
                   placeholder="Email"
                   ng-model="email"
-                  ng-model-options="{updateOn: 'blur'}"
                   required>
               </div>
-              <div class="form-group" ng-class="{'has-error': form.password.$invalid && submitted}">
+              <div class="form-group" >
                 <label for="password" class="control-label">Password</label>
                 <input
-                  type="password"
                   class="form-control"
-                  id="password"
-                  name="password"
                   placeholder="Password"
                   ng-model="password"
                   required>
               </div>
-              <button type="submit" class="btn right">Submit</button>
+              <button ng-click="addUserFun()" class="btn right" >Submit</button>
             </div>
           </div>
         </form>
       </div>
-    </div>
     </div><!-- /container -->
