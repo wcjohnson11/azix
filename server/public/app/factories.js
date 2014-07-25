@@ -8,7 +8,7 @@ angular.module('factories', ['ui.router'])
   //return entire list of friends
   var addUser = function(data){
     //returns results of ajax get request to api/links
-    console.log('in addUser');
+    console.log(data);
     return $http({
       method: 'POST',
       data: data,

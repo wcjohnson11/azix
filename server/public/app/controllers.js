@@ -36,12 +36,14 @@ angular.module('controllers', [])
     $scope.timeLogs = {};
     $scope.timeSum = 0;
     angular.forEach($scope.data.projects, function(project) {
-      var startTime = project.createdAt;
-      console.log(startTime, 'start');
-      var endTime = project.completed;
-      var difference = moment(moment(startTime,"HH:mm:ss").diff(moment(endTime,"HH:mm:ss"))).format("HH:mm:ss");
-      console.log(endTime, 'end');
+      // Remove YYYY-MM-DD, T and Z for comparison
+      var startTime = project.createdAt.slice(11,23);
+      var endTime = project.completed.slice(11,23);
+      //Get the minutes and seconds 
+      var difference = moment(moment(endTime,"HH:mm:ss").diff(moment(startTime,"HH:mm:ss"))).format("mm:ss");
+      //These are concatenating but shouldn't be
       $scope.timeSum += difference;
+      console.log($scope.timeSum);
       $scope.timeLogs[project[project]] = difference;
     });
 
@@ -107,11 +109,20 @@ angular.module('controllers', [])
 .controller('HomeCtrl', function($scope, $state, User){
   $scope.addUser = User.addUser;
   $scope.addUserFun = function(){
-    var x = {'email': $scope.email, 'password': $scope.password};
+    var x = {'username': $scope.email, 'password': $scope.password};
     console.log($scope);
     console.log($scope.email);
     console.log($scope.password);
     console.log(x);
     $scope.addUser(x);
   };
-});
+  });
+
+// .controller('UserCtrl', function($scope, $state, $filter, User, ngTableParams){
+//   $scope.data = {};
+//   $scope.data.user = localStorage.getItem('user') || "test";
+//   $scope.data.test = "sup " + $scope.data.user;
+//   Projects.getProjects($scope.data.user).then(function(response){
+//     $scope.data.projects = response.data;
+//   });
+// })
