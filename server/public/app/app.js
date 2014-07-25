@@ -37,6 +37,14 @@ angular.module('app', ['ui.router', 'factories','ngTable']) //dont forget to loa
   });
 
 })
+// .controller('UserCtrl', function($scope, $state, $filter, User, ngTableParams){
+//   $scope.data = {};
+//   $scope.data.user = localStorage.getItem('user') || "test";
+//   $scope.data.test = "sup " + $scope.data.user;
+//   Projects.getProjects($scope.data.user).then(function(response){
+//     $scope.data.projects = response.data;
+//   });
+// })
 
 .run(
   [          '$rootScope', '$state', '$stateParams',
