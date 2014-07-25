@@ -109,7 +109,7 @@ angular.module('controllers', [])
 .controller('HomeCtrl', function($scope, $state, User){
   $scope.addUser = User.addUser;
   $scope.addUserFun = function(){
-    var x = {'email': $scope.email, 'password': $scope.password};
+    var x = {'username': $scope.email, 'password': $scope.password};
     console.log($scope);
     console.log($scope.email);
     console.log($scope.password);
