@@ -15,9 +15,9 @@ describe("Angular testing framework", function() {
     })
 
     it("should say hello", function() {
-      var elm = compile('<div>hello</div>')(scope);
-      console.log(elm[0].textContent)
-      expect(elm[0].textContent).to.equal('hello');
+      var element = compile('<div>hello</div>')(scope);
+      console.log(element[0].textContent)
+      expect(element[0].textContent).to.equal('hello');
     });    
 })
 
@@ -27,7 +27,6 @@ describe("App", function() {
     beforeEach(module('app'));
  
     describe("App setup", function() {
- 
         var scope;
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
@@ -55,7 +54,6 @@ describe("Controllers", function() {
     beforeEach(module('app'));
  
     describe("ProjectsCtrl", function() {
- 
         var scope;
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
@@ -71,32 +69,20 @@ describe("Controllers", function() {
     });
 
     describe("HomeCtrl", function() {
- 
         var scope;
         var compile; 
         var rootScope;
-        var state;
-
         beforeEach(inject(function($rootScope, $controller, $state, $compile) {
             scope = $rootScope.$new();
-            compile = $compile;
             rootScope = $rootScope;
-            state = $state
             $controller("HomeCtrl", {
                 $scope: scope
             });
         }));
  
-        it("should have variables defined in ng-model", function() {
-            compile('<div ui-view></div>')
-            state.go('home')
-            should.exist(scope.email);
+        it("should have a function called addUserFun", function() {
+            expect(scope.addUserFun).to.be.a("function");
         });
 
-          it("should say hello", function() {
-            var elm = compile('<div>hello</div>')(rootScope);
-            console.log(elm[0].textContent)
-            expect(elm[0].textContent).to.equal('hello');
-          });
     });
 });
