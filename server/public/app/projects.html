@@ -1,7 +1,7 @@
 <div class="session ng-cloak">
 <div class="row">
 	<div class="col-md-4"><h1>Your Dashboard</h1></div>
-	<div class="col-md-4 statsleft"><button ng-click="refresh">Refresh Logs</button></div>
+	<div class="col-md-4 statsleft"><button ng-click="doRefresh()">Refresh Logs</button></div>
     <div class="col-md-4 statsright">
       <table>
       	<tr><td>Projects Complete: {{total - failed}}</td></tr>
@@ -18,17 +18,19 @@
   <div ng-controller="AccordionCtrl" class="datum">
 
   <accordion close-others="oneAtATime">
-    <accordion-group heading="Projects">
+    <accordion-group heading="Projects" is-open="status.isFirstOpen">
+    <div class="clearfix"></div>
+    <div loading-container="tableParams.settings().$loading">
     <table ng-table="tableParams" show-filter="true" class="table">
     <tr ng-repeat="project in projects">
         <td data-title="'Project Name'" filter="{ 'project': 'text' }" sortable="'project'">
             {{project.project}}
         </td>
         <td data-title="'Created at'" sortable="'createdAt'">
-            {{project.createdAt | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
+            {{project.createdAt | amDateFormat:' MMMM Do YYYY, h:mm:ss a'}}
         </td>
         <td data-title="'Completed at'" sortable="'completed'">
-        	{{project.completed | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
+        	{{project.completed | amDateFormat:' MMMM Do YYYY, h:mm:ss a'}}
         </td>
         <td data-title="'Status'" sortable="'code'">
           <span ng-if="project.code === 0">Success</span>
@@ -36,6 +38,7 @@
         </td>
     </tr>
 </table>
+</div>
       
     </accordion-group>
     <accordion-group heading="File Upload">
@@ -60,7 +63,7 @@
         <!-- ngRepeat: file in $flow.files -->
             <tr ng-repeat="file in $flow.files">
                 <td>{{$index+1}}</td>
-                <td>{{file.name}}</td>
+                <td>{{name}}</td>
             </tr>
           </div>
       		</div>

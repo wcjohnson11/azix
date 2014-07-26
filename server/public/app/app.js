@@ -51,6 +51,8 @@ angular.module('app', ['ui.router',
 
 .config(['flowFactoryProvider', function(flowFactoryProvider) {
   flowFactoryProvider.defaults = {
+    //this is where you put the route for
+    //POSTing to the server
     target: 'upload.php',
     permanentErrors: [404, 500, 501],
     maxChunkRetries: 1,
@@ -62,19 +64,4 @@ angular.module('app', ['ui.router',
   });
   // Can be used with different implementations of Flow.js
   // flowFactoryProvider.factory = fustyFlowFactory;
-}])
-
-.directive('loadingContainer', function () {
-    return {
-        restrict: 'A',
-        scope: false,
-        link: function(scope, element, attrs) {
-            var loadingLayer = angular.element('<div class="loading"></div>');
-            element.append(loadingLayer);
-            element.addClass('loading-container');
-            scope.$watch(attrs.loadingContainer, function(value) {
-                loadingLayer.toggleClass('ng-hide', !value);
-            });
-        }
-    };
-});
+}]);
