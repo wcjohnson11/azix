@@ -106,23 +106,11 @@ angular.module('controllers', [])
     $scope.items.push('Camera ' + newItemNo);
   };
 })
-.controller('HomeCtrl', function($scope, $state, User){
+.controller('HomeCtrl', function($scope, $state, User, Projects){
   $scope.addUser = User.addUser;
   $scope.addUserFun = function(){
     var x = {'username': $scope.email, 'password': $scope.password};
-    console.log($scope);
-    console.log($scope.email);
-    console.log($scope.password);
-    console.log(x);
     $scope.addUser(x);
   };
-  });
+});
 
-// .controller('UserCtrl', function($scope, $state, $filter, User, ngTableParams){
-//   $scope.data = {};
-//   $scope.data.user = localStorage.getItem('user') || "test";
-//   $scope.data.test = "sup " + $scope.data.user;
-//   Projects.getProjects($scope.data.user).then(function(response){
-//     $scope.data.projects = response.data;
-//   });
-// })

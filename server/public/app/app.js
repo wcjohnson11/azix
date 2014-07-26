@@ -45,7 +45,7 @@ angular.module('app', ['ui.router',
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/projects');
+  $urlRouterProvider.otherwise('/home');
 
 })
 
