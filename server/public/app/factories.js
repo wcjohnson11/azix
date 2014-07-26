@@ -5,10 +5,8 @@ angular.module('factories', ['ui.router'])
 
   //test data
 
-  //return entire list of friends
   var addUser = function(data){
     //returns results of ajax get request to api/links
-    console.log(data);
     return $http({
       method: 'POST',
       data: data,
@@ -16,7 +14,6 @@ angular.module('factories', ['ui.router'])
     });
   };
 
-  //functions injected when Friends is injected
   return {
     //actual functions
     addUser: addUser
@@ -29,7 +26,6 @@ angular.module('factories', ['ui.router'])
 
   //test data
 
-  //return entire list of friends
   var getProjects = function(user){
     //returns results of ajax get request to api/links
     return $http({
@@ -38,7 +34,6 @@ angular.module('factories', ['ui.router'])
     });
   };
 
-  //functions injected when Friends is injected
   return {
     //actual functions
     getProjects: getProjects
